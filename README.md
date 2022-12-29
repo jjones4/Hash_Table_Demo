@@ -1,2 +1,2 @@
 # Hash_Table_Demo
-Custom Implementation of a Hash Table to Demonstrate Understanding
+Custom implementation of a hash table to demonstrate understanding
