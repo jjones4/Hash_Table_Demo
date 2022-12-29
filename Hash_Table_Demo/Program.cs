@@ -30,7 +30,8 @@
                 { "water", "23120518" }
             };
 
-            // Create hash table
+            // Create hash table and initialize it
+
             // Hash table is an array of 130 arrays each of 3 arrays
             // with 2 strings in each of those arrays
             // [  [  [s1,s2][s1,s2][s1,s2]  ]  [  [s1,s2][s1,s2][s1,s2]  ]  ...  [  [s1,s2][s1,s2][s1,s2]  ]  ]
@@ -41,7 +42,6 @@
             // We could have up to 130 for an index
             string[,,] hashTable = new string[130, 3, 2];
 
-            // Initialize hashTable to "-"
             for (int i = 0; i < 130; i++)
             {
                 hashTable[i, 0, 0] = "-";
@@ -54,7 +54,7 @@
 
             // Put the data from our data array into the hash table
             // at the correct indeces (calculated by our calculateIndex
-            // method
+            // method)
             for (int i = 0; i < data.Length / 2; i++)
             {
                 // Check for collisions
@@ -81,17 +81,36 @@
                 }
             }
 
-            // Test some searching of the hash table by key from the original data set
-            for (int i = 0; i < data.Length / 2; i++)
-            {
-                Console.Write($"{hashTable[calculateIndex(data[i, 0]), 0, 0]} " +
-                              $"{hashTable[calculateIndex(data[i, 0]), 0, 1]} " +
-                              $"{hashTable[calculateIndex(data[i, 0]), 1, 0]} " +
-                              $"{hashTable[calculateIndex(data[i, 0]), 1, 1]} " +
-                              $"{hashTable[calculateIndex(data[i, 0]), 2, 0]} " +
-                              $"{hashTable[calculateIndex(data[i, 0]), 2, 1]} ");
+            Console.WriteLine();
 
-                Console.WriteLine();
+            // Test some searching of the hash table by key from the original data set
+            // Print out some values retrieved by using the keys from the original data set
+            // Console.Write($"{hashTable[calculateIndex(data[i, 0]), 0, 0]} " +
+
+            printValue(hashTable, "a"); // { "a", "1" }
+            printValue(hashTable, "abc"); // { "abc", "123" }
+            printValue(hashTable, "car"); // { "car", "3118" }
+            printValue(hashTable, "poop"); // { "poop", "16151516" }
+            printValue(hashTable, "dii"); // { "dii", "499" }
+            printValue(hashTable, "water"); // { "water", "23120518" }
+        }
+
+        static void printValue(string[,,] table, string key)
+        {
+            int index = calculateIndex(key);
+
+            // Search each of the three inner arrays
+            for (int i = 0; i < 3; i++)
+            {
+                // Check for collisions and move to the next array if needed
+                // to find the key
+                if (table[index, i, 0] == key)
+                {
+                    Console.WriteLine($"   The given key was: {key}. " +
+                        $"The associated value is: {table[index, i, 1]}.");
+
+                    break;
+                }
             }
         }
 
