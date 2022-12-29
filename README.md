@@ -7,4 +7,3 @@ Sample Output:
 <br>
 <br>
 
-https://github.com/jjones4/Hash_Table_Demo/blob/main/Sample_Output.png?raw=true
