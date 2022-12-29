@@ -30,30 +30,81 @@
                 { "water", "23120518" }
             };
 
-            // Test to make sure our ascii sums are correct
-            for (int i = 0; i < data.Length / 2; i++)
+            // Create hash table
+            // Hash table is an array of 130 arrays each of 3 arrays
+            // with 2 strings in each of those arrays
+            // [  [  [s1,s2][s1,s2][s1,s2]  ]  [  [s1,s2][s1,s2][s1,s2]  ]  ...  [  [s1,s2][s1,s2][s1,s2]  ]  ]
+            //           1     2      3              1      2      3                   1      2      3
+            //    1                            2 ...                             130
+            // Note that 130 is the largest sum of 5 letters "zzzzz"
+            // with ascii values of z = 122 - 96 for each "z"
+            // We could have up to 130 for an index
+            string[,,] hashTable = new string[130, 3, 2];
+
+            // Initialize hashTable to "-"
+            for (int i = 0; i < 130; i++)
             {
-                Console.WriteLine($"The string {data[i, 0]} sums to {calculateIndex(data[i, 0])}");
+                hashTable[i, 0, 0] = "-";
+                hashTable[i, 0, 1] = "-";
+                hashTable[i, 1, 0] = "-";
+                hashTable[i, 1, 1] = "-";
+                hashTable[i, 2, 0] = "-";
+                hashTable[i, 2, 1] = "-";
             }
 
-            // Step 1, calculate sum of ascii values minus 97
-            // to get a zero based index
-            // These sums become our hash table's array indeces
+            // Put the data from our data array into the hash table
+            // at the correct indeces (calculated by our calculateIndex
+            // method
+            for (int i = 0; i < data.Length / 2; i++)
+            {
+                // Check for collisions
 
+                // Check to make sure the first array of the three isn't filled
+                if (hashTable[calculateIndex(data[i, 0]), 0, 0] == "-")
+                {
+                    hashTable[calculateIndex(data[i, 0]), 0, 0] = data[i, 0];
+                    hashTable[calculateIndex(data[i, 0]), 0, 1] = data[i, 1];
+                }
+                // Check to make sure the second array of the three isn't filled
+                else if (hashTable[calculateIndex(data[i, 0]), 1, 0] == "-")
+                {
+                    hashTable[calculateIndex(data[i, 0]), 1, 0] = data[i, 0];
+                    hashTable[calculateIndex(data[i, 0]), 1, 1] = data[i, 1];
 
-            // Create hash table
-            // string[,,] hashTable = new string[,,];
+                }
+                // Put the data in the third array (we don't have more than 3
+                // collisions per index
+                else
+                {
+                    hashTable[calculateIndex(data[i, 0]), 2, 0] = data[i, 0];
+                    hashTable[calculateIndex(data[i, 0]), 2, 1] = data[i, 1];
+                }
+            }
+
+            // Test some searching of the hash table by key from the original data set
+            for (int i = 0; i < data.Length / 2; i++)
+            {
+                Console.Write($"{hashTable[calculateIndex(data[i, 0]), 0, 0]} " +
+                              $"{hashTable[calculateIndex(data[i, 0]), 0, 1]} " +
+                              $"{hashTable[calculateIndex(data[i, 0]), 1, 0]} " +
+                              $"{hashTable[calculateIndex(data[i, 0]), 1, 1]} " +
+                              $"{hashTable[calculateIndex(data[i, 0]), 2, 0]} " +
+                              $"{hashTable[calculateIndex(data[i, 0]), 2, 1]} ");
+
+                Console.WriteLine();
+            }
         }
 
         static int calculateIndex(string key)
         {
             int total = 0;
 
-            // ascii sum of lower case letters minus 97 to
-            // get a zero based count for our indeces
+            // ascii sum of lower case letters minus 96 to
+            // get a one-based count for our
+            // hash table array indeces
             foreach (char c in key)
             {
-                total += (int)(c) - 97;
+                total += (int)(c) - 96;
             }
 
             return total;
