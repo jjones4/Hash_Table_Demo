@@ -85,8 +85,6 @@
 
             // Test some searching of the hash table by key from the original data set
             // Print out some values retrieved by using the keys from the original data set
-            // Console.Write($"{hashTable[calculateIndex(data[i, 0]), 0, 0]} " +
-
             printValue(hashTable, "a"); // { "a", "1" }
             printValue(hashTable, "abc"); // { "abc", "123" }
             printValue(hashTable, "car"); // { "car", "3118" }
