@@ -81,7 +81,7 @@
                 }
             }
 
-            // Print hash table to ensure accuracty
+            // Print hash table to ensure accuracy
             foreach (var item in hashTable)
             {
                 if (item == null)
