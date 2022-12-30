@@ -81,6 +81,8 @@
                 }
             }
 
+            Console.WriteLine();
+
             // Print hash table to ensure accuracy
             foreach (var item in hashTable)
             {
@@ -92,16 +94,16 @@
                 {
                     if (item.GetType().IsArray)
                     {
-                        Console.Write($"Key {((string[])item)[0]}, Value {((string[])item)[1]}.");
+                        Console.Write($"   Key {((string[])item)[0]}, Value {((string[])item)[1]}.");
                     }
                     else
                     {
-                        Console.Write("Collision has occurred ...");
+                        Console.Write("   Collision has occurred ...");
                         Console.WriteLine(" Multiple key/value pairs stored in bucket.");
 
                         foreach (string[] stringArray in (LinkedList<string[]>)item)
                         {
-                            Console.Write($"Key {stringArray[0]}, Value {stringArray[1]}. ");
+                            Console.Write($"   Key {stringArray[0]}, Value {stringArray[1]}. ");
                         }
                     }
                 }
